@@ -1,0 +1,27 @@
+	/*   //////Text justification ////////
+	SMS
+	messages are
+	really short
+	*/
+
+	string S = "SMS messages are really short"; 
+	int K = 12; 
+
+	std::istringstream iss(S);
+	std::istream_iterator<string> begin(iss), end;
+	std::vector<std::string> tokens(begin, end);
+	vector<int> dp(tokens.size(), 0);
+	
+	for (int i = 1; i < tokens.size(); i++)
+	{
+		int Min = tokens.size(); // total ¦æ¼Æ
+		int length = tokens[i].size();
+		int j = i - 1;
+		for (; j <tokens.size(); j++)
+		{
+			length += 1 + tokens[j].size();
+			dp[i] = min(Min, dp[j] + length/K);
+		}
+	}
+
+	return dp[tokens.size()-1];  // ans: 3

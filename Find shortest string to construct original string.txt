@@ -1,0 +1,18 @@
+	string s = "abpcplea";
+	vector<string> d{ "ale","apple","monkey","plea" };
+
+	sort(d.begin(), d.end(), [](string a, string b) {
+		if (a.size() == b.size()) return a < b;
+		return a.length() > b.length();
+	});
+	for (string str : d)
+	{
+		int i = 0;
+		for (char c : s)
+		{
+			if (i < str.size() && c == str[i]) i++;
+		}
+		if (i == str.size()) return str;
+	}
+
+	return "";

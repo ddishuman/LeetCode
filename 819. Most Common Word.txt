@@ -1,0 +1,41 @@
+string paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.";
+	vector<string> banned{ "hit" };
+	
+	/*string paragraph = "a, a, a, a, b,b,b,c, c";
+	vector<string> banned{ "a" };*/
+	/*auto it = std::find_if(paragraph.begin(), paragraph.end(), [](const char element) -> bool {
+		return isspace(element) || ispunct(element); });*/
+	
+	vector<string> words;
+	
+	/*for (int i = 0; i < paragraph.size(); i++)
+	{
+		if (ispunct(paragraph[i]))
+		{
+			paragraph.erase(i--, 1);
+			paragraph.insert(i+1, 1, ' ');
+		}
+	}
+
+	for (auto&c : paragraph)
+	{
+		c = tolower(c);
+	}*/
+
+	for (auto& c : paragraph)
+	{
+		c = (isalpha(c)) ? tolower(c) : ' ';
+	}
+
+	unordered_map<string, int>m;
+	istringstream iss(paragraph);
+	string str;
+	pair<string, int> res("", 0);
+	while (iss >> str)
+	{
+		if (find(banned.begin(), banned.end(), str) == banned.end() &&
+			++m[str] > res.second)
+			res = make_pair(str, m[str]);
+	}
+
+	cout << res.first;

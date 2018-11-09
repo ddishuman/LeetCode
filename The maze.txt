@@ -1,0 +1,39 @@
+	vector<vector<int>> maze{ { 0, 0 ,1 ,0 ,0 }, { 0, 0 ,0 ,0 ,0 }, { 0 ,0 ,0, 1, 0 }, { 1 ,1 ,0 ,1 ,1 }, { 0, 0, 0, 0, 0 } };
+	vector<int> start{ 0, 4 };
+	vector<int> destination{ 4, 4 };
+
+
+class Solution {
+public:
+	vector<vector<int>> directions{ {0,-1}, {-1,0}, {0,1}, {1,0} };
+	bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+		int m = maze.size();
+		int n = maze[0].size();
+		vector<vector<int>> dp(m, vector<int>(n, -1));
+
+		return dfs(maze, dp, m, n, start[0], start[1], destination[0], destination[1]);
+	}
+
+	bool dfs(vector<vector<int>>& maze, vector<vector<int>>& dp, int m ,int n, int i, int j, int desti, int destj)
+	{
+		if (i == desti && j == destj) return true;
+		if (dp[i][j] != -1) return dp[i][j];
+		maze[i][j] = -1;
+		bool res = false;
+		for (auto di : directions)
+		{
+			int x = i, y = j;
+			while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] != 1)
+			{
+				x += di[0]; y += di[1];
+			}
+			x -= di[0];
+			y -= di[1];
+			dp[x][y] = 1;
+			if (maze[x][y] != -1)
+				res |= dfs(maze, dp, m, n, x, y, desti, destj);
+		}
+		
+		return res;
+	}
+};

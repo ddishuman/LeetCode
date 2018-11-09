@@ -1,0 +1,30 @@
+	vector<vector<int>> a;
+	int m = a.size();
+	int n = a[0].size();
+
+	vector<vector<long>> b;
+	for (int i = 0; i<m; i++)
+	{
+		vector<long> temp(a[i].begin(), a[i].end());
+		b.push_back(temp);
+	}
+
+	for (int i = 1; i < m; i++)
+	{
+		for (int j = 1; j < n; j++)
+		{
+			if (b[i][j] == 0)
+				continue;
+
+			b[i][j] = 0;
+			if (b[i - 1][j] > 0)
+				b[i][j] += b[i - 1][j];
+			if (a[i][j - 1] > 0)
+				b[i][j] += b[i][j - 1];
+		}
+
+		if (b[m - 1][n - 1] > 0)
+			return (int)b[m - 1][n - 1] % 1000000007;
+		else
+			return 0;
+	}

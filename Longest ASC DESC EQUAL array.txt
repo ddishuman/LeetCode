@@ -1,0 +1,39 @@
+	vector<int> vec{ 1, 2, 4, 2, 2, 2, 1 };
+	int cnt = 0;
+	int lenAsc = 1, lenDes = 1, lenEqual = 1;
+
+	for (int i = 0; i < vec.size()-1; i++)
+	{
+		if (vec[i] < vec[i + 1])
+			lenAsc++;
+		else
+		{
+			cnt += lenAsc * (lenAsc - 1) / 2;
+			lenAsc = 1;
+		}
+
+		if (vec[i] > vec[i + 1])
+			lenDes++;
+		else
+		{
+			cnt += lenDes * (lenDes - 1) / 2;
+			lenDes = 1;
+		}
+
+		if (vec[i] == vec[i + 1])
+			lenEqual++;
+		else
+		{
+			cnt += lenEqual * (lenEqual - 1) / 2;
+			lenEqual = 1;
+		}
+	}
+
+	if (lenAsc > 1)
+		cnt += lenAsc * (lenAsc - 1) / 2;
+	if (lenDes > 1)
+		cnt += lenDes * (lenDes - 1) / 2;
+	if (lenEqual > 1)
+		cnt += lenEqual * (lenEqual - 1) / 2;
+
+	return cnt;
